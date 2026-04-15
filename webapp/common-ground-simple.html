@@ -1,0 +1,551 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Common Ground</title>
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #1a1a2e;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px 0;
+        }
+
+        .card {
+            background-color: white;
+            width: 420px;
+            border-radius: 16px;
+            overflow: hidden;
+        }
+
+        .header {
+            background-color: #22c55e;
+            text-align: center;
+            padding: 30px 20px;
+        }
+
+        .header h1 {
+            color: white;
+            font-size: 36px;
+            font-weight: bold;
+            line-height: 1;
+        }
+
+        .header p {
+            color: white;
+            font-size: 13px;
+            margin-top: 8px;
+            letter-spacing: 2px;
+        }
+
+        .body {
+            padding: 28px 28px 32px;
+        }
+
+        .section-title {
+            text-align: center;
+            font-size: 13px;
+            font-weight: bold;
+            letter-spacing: 2px;
+            color: #111;
+            margin-bottom: 16px;
+        }
+
+        .role-group {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+
+        .role-btn {
+            flex: 1;
+            padding: 10px 6px;
+            border: 2px solid #ccc;
+            border-radius: 10px;
+            background-color: white;
+            font-size: 14px;
+            font-weight: bold;
+            cursor: pointer;
+            color: #555;
+        }
+
+        .role-btn:hover {
+            border-color: #22c55e;
+            color: #22c55e;
+        }
+
+        .role-btn.active {
+            background-color: #22c55e;
+            border-color: #22c55e;
+            color: white;
+        }
+
+        label {
+            display: block;
+            font-size: 12px;
+            font-weight: bold;
+            letter-spacing: 1px;
+            color: #111;
+            margin-bottom: 5px;
+        }
+
+        input[type="text"],
+        input[type="email"],
+        input[type="password"],
+        textarea {
+            width: 100%;
+            padding: 12px 14px;
+            border: 2px solid #ddd;
+            border-radius: 10px;
+            font-size: 14px;
+            background-color: #f0faf3;
+            margin-bottom: 4px;
+            outline: none;
+            font-family: Arial, sans-serif;
+        }
+
+        textarea {
+            resize: vertical;
+            min-height: 72px;
+            line-height: 1.5;
+        }
+
+        input[type="text"]:focus,
+        input[type="email"]:focus,
+        input[type="password"]:focus,
+        textarea:focus {
+            border-color: #22c55e;
+        }
+
+        .error-msg {
+            color: red;
+            font-size: 12px;
+            margin-bottom: 10px;
+            min-height: 16px;
+        }
+
+        .label-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 5px;
+        }
+
+        .label-row label {
+            margin-bottom: 0;
+        }
+
+        .forgot-link {
+            font-size: 13px;
+            color: #22c55e;
+            text-decoration: none;
+            font-weight: bold;
+        }
+
+        .form-divider {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin: 14px 0 16px;
+        }
+
+        .form-divider span {
+            font-size: 11px;
+            font-weight: bold;
+            letter-spacing: 2px;
+            color: #aaa;
+            white-space: nowrap;
+        }
+
+        .form-divider::before,
+        .form-divider::after {
+            content: '';
+            flex: 1;
+            height: 1px;
+            background-color: #e5e7eb;
+        }
+
+        .submit-btn {
+            width: 100%;
+            padding: 15px;
+            background-color: #22c55e;
+            color: white;
+            font-size: 17px;
+            font-weight: bold;
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+            margin-top: 6px;
+            letter-spacing: 1px;
+        }
+
+        .submit-btn:hover {
+            background-color: #16a34a;
+        }
+
+        .bottom-text {
+            text-align: center;
+            margin-top: 18px;
+            font-size: 14px;
+            color: #888;
+        }
+
+        .bottom-text a {
+            display: block;
+            margin-top: 4px;
+            font-weight: bold;
+            color: #111;
+            text-decoration: none;
+            font-size: 14px;
+        }
+
+        .bottom-text a:hover {
+            color: #22c55e;
+        }
+
+        .two-col {
+            display: flex;
+            gap: 12px;
+        }
+
+        .two-col .field {
+            flex: 1;
+        }
+
+        .checkbox-row {
+            display: flex;
+            align-items: flex-start;
+            gap: 8px;
+            margin-bottom: 4px;
+        }
+
+        .checkbox-row input[type="checkbox"] {
+            margin-top: 3px;
+            width: 16px;
+            height: 16px;
+            accent-color: #22c55e;
+            cursor: pointer;
+        }
+
+        .checkbox-row span {
+            font-size: 13px;
+            color: #555;
+            line-height: 1.5;
+        }
+
+        .checkbox-row a {
+            color: #22c55e;
+            font-weight: bold;
+            text-decoration: none;
+        }
+
+        .page {
+            display: none;
+        }
+
+        .page.active {
+            display: block;
+        }
+
+        @media (max-width: 460px) {
+            .card {
+                width: 100%;
+                border-radius: 0;
+            }
+
+            .two-col {
+                flex-direction: column;
+                gap: 0;
+            }
+        }
+    </style>
+</head>
+<body>
+
+<div class="card">
+
+    <div class="header">
+        <h1>COMMON<br>GROUND</h1>
+        <p id="header-tag">GET IN THE GAME</p>
+    </div>
+
+    <!-- LOGIN PAGE -->
+    <div class="body page active" id="login-page">
+
+        <p class="section-title">SELECT YOUR ROSTER SPOT</p>
+
+        <form action="login" method="post" onsubmit="return handleLogin()">
+
+            <div class="role-group" id="login-roles">
+                <button type="button" class="role-btn active"
+                        onclick="selectRole('login-roles', this, 'Player')">⭐ Player</button>
+                <button type="button" class="role-btn"
+                        onclick="selectRole('login-roles', this, 'Coach')">🎙 Coach</button>
+                <button type="button" class="role-btn"
+                        onclick="selectRole('login-roles', this, 'Venue')">🏟 Venue</button>
+            </div>
+
+            <input type="hidden" name="role" id="login-role" value="Player">
+
+            <label for="login-email">EMAIL ADDRESS</label>
+            <input type="email" id="login-email" name="email"
+                   placeholder="athlete@example.com" required />
+            <div class="error-msg" id="login-email-error"></div>
+
+            <div class="label-row">
+                <label for="login-pass">PASSWORD</label>
+                <a href="#" class="forgot-link">Forgot?</a>
+            </div>
+            <input type="password" id="login-pass" name="password"
+                   placeholder="••••••••" required />
+            <div class="error-msg" id="login-pass-error"></div>
+
+            <button type="submit" class="submit-btn">LOGIN &amp; PLAY</button>
+
+        </form>
+
+        <div class="bottom-text">
+            Ready to join the league?
+            <a href="#" onclick="showPage('signup')">SIGN UP HERE</a>
+        </div>
+
+    </div>
+
+    <!-- SIGN UP PAGE -->
+    <div class="body page" id="signup-page">
+        <p class="section-title">CREATE YOUR ACCOUNT</p>
+
+        <form action="signup" method="POST" id="signupForm" onsubmit="return handleSignup()">
+
+            <div class="role-group" id="signup-roles">
+                <button type="button" class="role-btn active" onclick="selectRole('signup-roles', this, 'Player')">⭐ Player</button>
+                <button type="button" class="role-btn"        onclick="selectRole('signup-roles', this, 'Coach')">🎙 Coach</button>
+                <button type="button" class="role-btn"        onclick="selectRole('signup-roles', this, 'Venue')">🏟 Venue</button>
+            </div>
+
+            <input type="hidden" name="signup-role" id="signup-role-val" value="Player">
+
+            <div class="field">
+                <label for="signup-fullname">FULL NAME</label>
+                <input type="text" id="signup-fullname" name="signup-fullname" placeholder="John Doe" />
+                <div class="error-msg" id="signup-fullname-error"></div>
+            </div>
+
+            <label for="signup-email">EMAIL ADDRESS</label>
+            <input type="email" id="signup-email" name="signup-email" placeholder="athlete@example.com" />
+            <div class="error-msg" id="signup-email-error"></div>
+
+            <label for="signup-pass">PASSWORD</label>
+            <input type="password" id="signup-pass" name="signup-pass" placeholder="Min. 8 characters" />
+            <div class="error-msg" id="signup-pass-error"></div>
+
+            <label for="signup-confirm">CONFIRM PASSWORD</label>
+            <input type="password" id="signup-confirm" name="signup-confirm" placeholder="Repeat your password" />
+            <div class="error-msg" id="signup-confirm-error"></div>
+
+            <!-- LOCATION SECTION -->
+            <div class="form-divider"><span>📍 LOCATION</span></div>
+
+            <label for="signup-address">ADDRESS</label>
+            <textarea id="signup-address" name="signup-address" placeholder="House / Flat No., Street, Area"></textarea>
+            <div class="error-msg" id="signup-address-error"></div>
+
+            <div class="two-col">
+                <div class="field">
+                    <label for="signup-city">CITY</label>
+                    <input type="text" id="signup-city" name="signup-city" placeholder="Mumbai" />
+                    <div class="error-msg" id="signup-city-error"></div>
+                </div>
+                <div class="field">
+                    <label for="signup-pincode">PINCODE</label>
+                    <input type="text" id="signup-pincode" name="signup-pincode" placeholder="400001" maxlength="6" />
+                    <div class="error-msg" id="signup-pincode-error"></div>
+                </div>
+            </div>
+
+            <div class="checkbox-row">
+                <input type="checkbox" id="signup-terms" name="signup-terms" />
+                <span>I agree to the <a href="#">Terms</a></span>
+            </div>
+            <div class="error-msg" id="signup-terms-error"></div>
+
+            <button type="submit" class="submit-btn">JOIN THE TEAM</button>
+
+            <div class="bottom-text">
+                Already on the roster?
+                <a href="#" onclick="showPage('login')">LOGIN HERE</a>
+            </div>
+
+        </form>
+    </div>
+</div>
+
+<script>
+    function showPage(pageName) {
+        document.getElementById('login-page').classList.remove('active');
+        document.getElementById('signup-page').classList.remove('active');
+        document.getElementById(pageName + '-page').classList.add('active');
+        document.getElementById('header-tag').textContent =
+            pageName === 'signup' ? 'JOIN THE LEAGUE' : 'GET IN THE GAME';
+    }
+
+    function selectRole(groupId, clickedBtn, role) {
+        var buttons = document.getElementById(groupId).querySelectorAll('.role-btn');
+        for (var i = 0; i < buttons.length; i++) {
+            buttons[i].classList.remove('active');
+        }
+        clickedBtn.classList.add('active');
+        if (groupId === 'login-roles') {
+            document.getElementById('login-role').value = role;
+        } else if (groupId === 'signup-roles') {
+            document.getElementById('signup-role-val').value = role;
+        }
+    }
+
+    function showError(errorId, message) {
+        document.getElementById(errorId).textContent = message;
+    }
+
+    function clearError(errorId) {
+        document.getElementById(errorId).textContent = '';
+    }
+
+    function isValidEmail(email) {
+        return email.includes('@') && email.includes('.');
+    }
+
+    function isValidPincode(pincode) {
+        return /^\d{6}$/.test(pincode);
+    }
+
+    function handleLogin() {
+        var email = document.getElementById('login-email').value.trim();
+        var pass  = document.getElementById('login-pass').value;
+        var ok    = true;
+
+        clearError('login-email-error');
+        clearError('login-pass-error');
+
+        if (email === '') {
+            showError('login-email-error', 'Please enter your email.');
+            ok = false;
+        } else if (!isValidEmail(email)) {
+            showError('login-email-error', 'Please enter a valid email address.');
+            ok = false;
+        }
+
+        if (pass === '') {
+            showError('login-pass-error', 'Please enter your password.');
+            ok = false;
+        } else if (pass.length < 6) {
+            showError('login-pass-error', 'Password must be at least 6 characters.');
+            ok = false;
+        }
+
+        return ok;
+    }
+
+    function handleSignup() {
+        var fullname = document.getElementById('signup-fullname').value.trim();
+        var email    = document.getElementById('signup-email').value.trim();
+        var pass     = document.getElementById('signup-pass').value;
+        var confirm  = document.getElementById('signup-confirm').value;
+        var address  = document.getElementById('signup-address').value.trim();
+        var city     = document.getElementById('signup-city').value.trim();
+        var pincode  = document.getElementById('signup-pincode').value.trim();
+        var terms    = document.getElementById('signup-terms').checked;
+        var ok       = true;
+
+        clearError('signup-fullname-error');
+        clearError('signup-email-error');
+        clearError('signup-pass-error');
+        clearError('signup-confirm-error');
+        clearError('signup-address-error');
+        clearError('signup-city-error');
+        clearError('signup-pincode-error');
+        clearError('signup-terms-error');
+
+        if (fullname === '') {
+            showError('signup-fullname-error', 'Please enter your full name.');
+            ok = false;
+        }
+
+        if (email === '') {
+            showError('signup-email-error', 'Please enter your email.');
+            ok = false;
+        } else if (!isValidEmail(email)) {
+            showError('signup-email-error', 'Please enter a valid email address.');
+            ok = false;
+        }
+
+        if (pass === '') {
+            showError('signup-pass-error', 'Please enter a password.');
+            ok = false;
+        } else if (pass.length < 8) {
+            showError('signup-pass-error', 'Password must be at least 8 characters.');
+            ok = false;
+        }
+
+        if (confirm === '') {
+            showError('signup-confirm-error', 'Please confirm your password.');
+            ok = false;
+        } else if (confirm !== pass) {
+            showError('signup-confirm-error', 'Passwords do not match.');
+            ok = false;
+        }
+
+        if (address === '') {
+            showError('signup-address-error', 'Please enter your address.');
+            ok = false;
+        }
+
+        if (city === '') {
+            showError('signup-city-error', 'Please enter your city.');
+            ok = false;
+        }
+
+        if (pincode === '') {
+            showError('signup-pincode-error', 'Please enter your pincode.');
+            ok = false;
+        } else if (!isValidPincode(pincode)) {
+            showError('signup-pincode-error', 'Pincode must be 6 digits.');
+            ok = false;
+        }
+
+        if (!terms) {
+            showError('signup-terms-error', 'Please accept the terms to continue.');
+            ok = false;
+        }
+
+        return ok;
+    }
+
+    window.onload = function() {
+        const urlParams = new URLSearchParams(window.location.search);
+
+        if (urlParams.get('error') === '1') {
+            showError('login-pass-error', 'Account not found for this role.');
+            alert("Login Failed: User not found.");
+        } else if (urlParams.get('error') === 'db') {
+            showError('login-pass-error', 'Database connection error.');
+        } else if (urlParams.get('error') === 'exists') {
+            showPage('signup');
+            showError('signup-email-error', 'This email is already registered. Please login.');
+            alert("Signup Failed: User already exists.");
+        }
+    }
+</script>
+
+</body>
+</html>
