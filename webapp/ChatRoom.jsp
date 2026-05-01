@@ -117,6 +117,38 @@ body {
     color: white;
     cursor: pointer;
 }
+
+.role {
+    margin-left: 6px;
+    padding: 2px 8px;
+    font-size: 11px;
+    border-radius: 10px;
+    font-weight: 500;
+}
+
+/* Soft pastel styles */
+.role.coach {
+    background: rgba(147, 51, 234, 0.12);
+    color: #7c3aed;
+}
+
+.role.player {
+    background: rgba(37, 99, 235, 0.12);
+    color: #2563eb;
+}
+
+.role.beginner {
+    background: rgba(22, 163, 74, 0.12);
+    color: #16a34a;
+}
+
+/* fallback */
+.role {
+    background: rgba(0,0,0,0.08);
+    color: #555;
+}
+
+
 </style>
 
 </head>
@@ -199,8 +231,11 @@ function loadMessages() {
             const chatBox = document.getElementById("chatBox");
             chatBox.innerHTML = "";
 
-            const currentUser = "<%= session.getAttribute("userFname") != null ? session.getAttribute("userFname") : "Guest" %>";
-
+            <%
+            String currentUser = (String) session.getAttribute("userFname");
+            if (currentUser == null) currentUser = "Guest";
+            %>
+            const currentUser = "<%= currentUser %>";
             data.forEach(msg => {
                 const div = document.createElement("div");
                 const side = (msg.sender === currentUser) ? "right" : "left";
@@ -208,7 +243,11 @@ function loadMessages() {
                 div.className = `msg ${side}`;
                 // Added the msg.time inside a span
                 div.innerHTML = `
-                    <strong>${msg.sender}</strong>
+                    <strong>
+                      ${msg.sender}
+                      <span class="role ${msg.role.toLowerCase()}">${msg.role}</span>
+                    </strong>
+
                     <div>${msg.text}</div>
                     <span class="time">${msg.time}</span>
                 `;

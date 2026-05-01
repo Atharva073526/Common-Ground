@@ -7,6 +7,48 @@ body {
   color: #1a1a2e;
   min-height: 100vh;
 }
+/* Level Editor Button */
+.edit-level-btn {
+  background: none;
+  border: none;
+  color: #9333ea;
+  font-size: 11px;
+  cursor: pointer;
+  margin-top: 4px;
+  padding: 2px 6px;
+  border-radius: 4px;
+  transition: background 0.2s;
+}
+
+.edit-level-btn:hover {
+  background: #f3e8ff;
+  text-decoration: underline;
+}
+
+/* Level Select Dropdown */
+.level-select {
+  width: 100%;
+  padding: 12px 14px;
+  border: 2px solid #ddd;
+  border-radius: 10px;
+  font-size: 14px;
+  background-color: #f0faf3;
+  font-family: Arial, sans-serif;
+  cursor: pointer;
+}
+
+.level-select:focus {
+  border-color: #22c55e;
+  outline: none;
+}
+
+.current-level-display {
+  padding: 10px;
+  background: #f0f0f5;
+  border-radius: 8px;
+  font-weight: bold;
+  color: #1a1a2e;
+}
 
 /* ===== NAVBAR ===== */
 .navbar {

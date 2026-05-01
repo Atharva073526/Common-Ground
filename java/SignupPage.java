@@ -33,6 +33,7 @@ public class SignupPage extends HttpServlet {
             Class.forName("com.mysql.cj.jdbc.Driver");
             Connection con = DriverManager.getConnection(url, user, pass);
 
+            // Check if user already exists
             PreparedStatement checkStmt = con.prepareStatement("SELECT * FROM userlist WHERE Email = ?");
             checkStmt.setString(1, email);
             ResultSet rs = checkStmt.executeQuery();
@@ -40,6 +41,7 @@ public class SignupPage extends HttpServlet {
             if (rs.next()) {
                 resp.sendRedirect("common-ground-simple.html?error=exists");
             } else {
+                // Insert new user
                 PreparedStatement ps = con.prepareStatement(
                         "INSERT INTO userlist (Fname, Email, Password, role, address, city, pincode, level) VALUES (?, ?, ?, ?, ?, ?, ?, ?)"
                 );
@@ -50,32 +52,35 @@ public class SignupPage extends HttpServlet {
                 ps.setString(5, address);
                 ps.setString(6, city);
                 ps.setString(7, pincode);
-                ps.setString(8, "Beginner"); // default level
+                ps.setString(8, "Beginner");
 
                 int result = ps.executeUpdate();
-
-
-                PreparedStatement psx = con.prepareStatement("SELECT * FROM userlist");
-                ResultSet rsx = psx.executeQuery();
-
-                if (rsx.next()) {
-                    HttpSession session = req.getSession();
-
-                    int id = rsx.getInt("id");
-                    session.setAttribute("userId", id);
-
-                    session.setAttribute("userEmail", email);
-                    session.setAttribute("userRole", role);
-                    session.setAttribute("userFname", fname);
-                    session.setAttribute("userCity", city);
-                    session.setAttribute("userLevel", "Beginner");
-
-                    resp.sendRedirect("dashboard.jsp");
-                } else {
-                    resp.sendRedirect("login.jsp?error=invalid");
-                }
-
                 ps.close();
+
+                if (result > 0) {
+                    // ✅ FIXED: Get the actual user we just inserted
+                    PreparedStatement getUserStmt = con.prepareStatement("SELECT * FROM userlist WHERE Email = ?");
+                    getUserStmt.setString(1, email);
+                    ResultSet userRs = getUserStmt.executeQuery();
+
+                    if (userRs.next()) {
+                        HttpSession session = req.getSession();
+                        session.setAttribute("userId", userRs.getInt("id"));
+                        session.setAttribute("userEmail", email);
+                        session.setAttribute("userRole", role);
+                        session.setAttribute("userFname", fname);
+                        session.setAttribute("userCity", city);
+                        session.setAttribute("userLevel", "Beginner");
+
+                        getUserStmt.close();
+                        userRs.close();
+                        resp.sendRedirect("dashboard.jsp");
+                    } else {
+                        resp.sendRedirect("common-ground-simple.html?error=db");
+                    }
+                } else {
+                    resp.sendRedirect("common-ground-simple.html?error=db");
+                }
             }
 
             checkStmt.close();

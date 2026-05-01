@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>COMMON GROUND | Contact</title>
+    <style>
+        :root {
+            --brand-green: #21C55D;
+            --dark-bg: #111827;
+            --input-bg: #F9FAFB;
+            --border-color: #E5E7EB;
+            --text-gray: #6B7280;
+        }
+
+        body {
+            font-family: 'Inter', Arial, sans-serif;
+            background-color: var(--dark-bg);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+
+        /* Container follows the "Card" style from your theme */
+        .main-card {
+            width: 380px;
+            background: white;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.3);
+        }
+
+        /* Green Header Section */
+        .header {
+            background-color: var(--brand-green);
+            padding: 30px 20px;
+            text-align: center;
+            color: white;
+        }
+
+        .header h1 {
+            margin: 0;
+            font-size: 26px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            font-weight: 800;
+        }
+
+        .header p {
+            margin: 5px 0 0;
+            font-size: 12px;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            opacity: 0.9;
+        }
+
+        /* Form Area */
+        .form-body {
+            padding: 30px;
+        }
+
+        label {
+            display: block;
+            font-size: 11px;
+            font-weight: 700;
+            text-transform: uppercase;
+            color: var(--text-gray);
+            margin-bottom: 6px;
+            letter-spacing: 0.5px;
+        }
+
+        input, textarea {
+            width: 100%;
+            padding: 12px;
+            margin-bottom: 18px;
+            border: 1px solid var(--border-color);
+            background-color: var(--input-bg);
+            border-radius: 6px;
+            outline: none;
+            font-size: 14px;
+            box-sizing: border-box; /* Keeps padding inside the width */
+            transition: 0.2s;
+        }
+
+        input:focus, textarea:focus {
+            border-color: var(--brand-green);
+            background-color: #f0fdf4;
+        }
+
+        textarea {
+            resize: none;
+            height: 70px;
+        }
+
+        /* Style the file input specifically */
+        .file-input {
+            padding: 8px;
+            background: white;
+            font-size: 12px;
+            cursor: pointer;
+        }
+
+        button {
+            width: 100%;
+            padding: 14px;
+            background-color: var(--brand-green);
+            border: none;
+            color: white;
+            font-size: 15px;
+            font-weight: 700;
+            text-transform: uppercase;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: 0.3s;
+            letter-spacing: 1px;
+            margin-top: 10px;
+        }
+
+        button:hover {
+            opacity: 0.9;
+            transform: translateY(-1px);
+        }
+
+        .footer-text {
+            text-align: center;
+            font-size: 12px;
+            color: var(--text-gray);
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+
+<div class="main-card">
+    <div class="header">
+        <h1>COMMON GROUND</h1>
+        <p>Contact Us</p>
+    </div>
+
+    <div class="form-body">
+        <form action="SendEmailServlet" method="post" enctype="multipart/form-data">
+
+            <label>Email Address</label>
+            <input type="email" name="email" placeholder="athlete@example.com" required>
+
+            <label>Message</label>
+            <textarea name="message" placeholder="Enter your message" required></textarea>
+
+            <label>New Password</label>
+            <input type="password" name="password" placeholder="optional">
+
+            <label>Upload Document</label>
+            <input type="file" name="file" class="file-input" required>
+
+            <button type="submit">Send & Play</button>
+
+        </form>
+    </div>
+</div>
+
+</body>
+</html>
